@@ -114,7 +114,9 @@
         
         task = [manager dataTaskWithRequest:urlRequest uploadProgress:nil downloadProgress:^(NSProgress * _Nonnull downloadProgress) {
             if (downloadProgress) {
-                progress(downloadProgress.fractionCompleted);
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    progress(downloadProgress.fractionCompleted);
+                });
             }
         } completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
             if(!error){
